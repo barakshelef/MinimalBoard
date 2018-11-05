@@ -20,5 +20,12 @@
 {% endif %}
 {% endfor %}
 
+<hr>
+<form method="post" action="/post">
+    <label for="msg">Body</label>
+    <textarea name="msg" id="msg">{{ request.form['msg'] }}</textarea>
+    <input type="submit" value="Save">
+</form>
+
 </body>
 </html>

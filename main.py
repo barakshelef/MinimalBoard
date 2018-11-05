@@ -1,7 +1,7 @@
 import os
 import sqlite3
 
-from flask import Flask, g, render_template
+from flask import Flask, g, render_template, request, redirect
 
 app = Flask(__name__)
 
@@ -40,6 +40,14 @@ def index():
     db = get_db()
     posts = db.execute("SELECT msg, date FROM post ORDER BY date DESC").fetchall()
     return render_template('index.html', posts=posts)
+
+
+@app.route('/post', methods=('POST',))
+def post():
+    db = get_db()
+    db.execute("INSERT INTO post (msg) values (?)", (request.form['msg'],))
+    db.commit()
+    return redirect("/")
 
 
 @app.route("/init")
